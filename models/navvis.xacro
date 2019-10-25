@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro" name="Navvis" >
+	<xacro:include filename="$(find gazebo_plugins)/test/multi_robot_scenario/xacro/laser/hokuyo.xacro" />
+	<xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro" />
+	<material name="white">
+		<color rgba="1 1 1 1"/>
+	</material>
+
+	<material name="black">
+		<color rgba="0 0 0 1"/>
+	</material>
+
+	<xacro:macro name="laser_vert" params="description xyz rpy">
+		<link name="laser_vert_${description}">
+			<visual>
+				<geometry>
+					<box size=".062 .062 .087"/>
+				</geometry>
+				<material name="black"/>
+			</visual>
+			<collision>
+				<geometry>
+					<box size=".062 .062 .087"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="base2laser_vert_${description}" type="fixed">
+			<parent link="base" />
+			<child link="laser_vert_${description}"/>
+			<origin xyz="${xyz}" rpy="${rpy}"/>
+		</joint>
+	</xacro:macro>
+	<xacro:macro name="wheel" params="description xyz radius">
+		<link name="wheel_${description}">
+			<visual>
+				<geometry>
+					<cylinder radius="${radius}" length=".05"/>
+				</geometry>
+				<material name="black"/>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder radius="${radius}" length=".05"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="base2wheel_${description}" type="continuous">
+			<parent link="base" />
+			<child link="wheel_${description}"/>
+			<origin xyz="${xyz}" rpy="-1.5707 0.0 0.0"/>
+			<axis xyz="0 1 0"/>
+			<limit effort=".1" velocity="99"/>
+		</joint>
+	</xacro:macro>
+	<xacro:macro name="base">
+		<origin xyz=".2 0 .99"/>
+		<geometry>
+			<box size="0.2 0.3 1.80"/>
+		</geometry>
+	</xacro:macro>	
+	
+	<xacro:macro name="laser_horiz">
+		<geometry>
+			<cylinder radius="0.052" length="0.072"/>
+		</geometry>
+	</xacro:macro>
+	<link name="base">
+			<visual>
+				<material name="white"/>
+				<xacro:base/>
+			</visual>
+			<collision>
+				<geometry>
+					<box size="0.94 0.78 1.98"/>
+				</geometry> 
+			</collision>
+	</link>
+	<!--link name="laser_horiz">
+			<visual>
+				<material name="black"/>
+				<xacro:laser_horiz/>
+			</visual>
+			<collision>
+				<xacro:laser_horiz/>
+			</collision>
+	</link>
+
+	<joint name="base2laser_horiz" type="fixed">
+		<parent link="base" />
+		<child link="laser_horiz"/>
+		<origin xyz="0.2325 0.0001 1.9201" rpy="-0.00121 0.11465 -0.001530"/>
+	</joint>
+
+
+	<xacro:laser_vert description="top_right" xyz="0.2978 -0.1450 1.8451" rpy="-1.176 0.6313 -1.9377"/>
+	<xacro:laser_vert description="top_left" xyz="0.2997 0.1531 1.8443" rpy="1.178 0.6198 1.9560"/>
+	<xacro:laser_vert description="bottom" xyz="0.3158 -0.0021 .51" rpy="3.1355 -1.3045 0.0025"/-->
+	<VLP-16 parent="base" name="laser_horiz" topic="laser_horiz/packets" hz="10" samples="440" gpu="false">
+		<origin xyz="0.2325416305773505 -0.0001380069427607134 1.920122926231907"
+rpy="-0.0012068 0.114646 -0.0015308" />
+	</VLP-16>
+	<xacro:laser name="top_right" parent="base" xyz="0.2978 -0.1450 1.8451" rpy="-1.176 0.6313 -1.9377" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
+	<xacro:laser name="top_left" parent="base" xyz="0.2997 0.1531 1.8443" rpy="1.178 0.6198 1.9560" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
+	<xacro:laser name="bottom" parent="base" xyz="0.3158 -0.0021 .51" rpy="3.1355 -1.3045 0.0025" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
+
+	<xacro:wheel description="right" xyz="-0.1 -0.4 .2" radius=".2"/>
+	<xacro:wheel description="left" xyz="-0.1 0.4 .2" radius=".2"/>
+	<xacro:wheel description="front_right" xyz="0.5 -0.05 .15" radius=".15"/>
+	<xacro:wheel description="front_left" xyz="0.5 0.05 .15" radius=".15"/>
+</robot>
