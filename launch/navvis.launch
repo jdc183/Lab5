@@ -1,22 +1,21 @@
 <launch>
 	<arg name="use_imu" default="true" />
-	
+	<arg name="use_sim_time" default="true" />
 	<!--group if="$(arg use_xacro)">
 		<arg if="$(arg use_imu )" name="filename" default="navviswimu.xacro" />
 		<arg unless="$(arg use_imu )" name="filename" default="navvis.xacro" />
 	</group-->
-	<arg if="$(arg use_imu)" name = "filename" value="navviswimu.xacro" />
-	<arg unless="$(arg use_imu)" name = "filename" value="navvis.xacro" />
+	<arg if="$(arg use_imu)" name = "filename" default="navviswimu.xacro" />
+	<arg unless="$(arg use_imu)" name = "filename" default="navvis.xacro" />
 	
-	<arg name="file" default="$(find Lab_5)/models/$(arg filename)" />
 	<arg name="use_robot_state_publisher" default="true" />
-	
-	<param if="$(arg use_xacro)" name="robot_description" command="$(find xacro)/xacro.py --inorder $(arg file)" />
+	<param if="$(arg use_sim_time)" name="/use_sim_time" value = "true"/>
+	<param name="robot_description" command="$(find xacro)/xacro.py --inorder $(find Lab_5)/models/$(arg filename)" />
 	<!-- Run the robot_state_publisher unless specified. -->
 	<group if="$(arg use_robot_state_publisher)">
 		<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
 	</group>
 		
 	<node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" />
-	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find navvis)/config/navvis.rviz" required="true" />
+	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find Lab_5)/config/navvis.rviz" required="true" />
 </launch>

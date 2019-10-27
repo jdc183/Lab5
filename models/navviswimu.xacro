@@ -1,17 +1,17 @@
 <?xml version="1.0"?> 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="navvis_m6"> 
    <xacro:include filename="$(find Lab_5)/models/navvis.xacro" /> 
-   <link name="base"> 
+   <link name="base_link"> 
    </link> 
-   <joint name="base_base_joint" type="fixed"> 
-	<parent link="base" /> 
+   <joint name="base_link_base_joint" type="fixed"> 
+	<parent link="base_link" /> 
 	<child link="base" /> 
-	<origin xyz="0.07 0   1.792" rpy="0.0 ${pi} 0.0" /> 
+	<origin xyz="0.07 0 1.792" rpy="0.0 ${pi} 0.0" /> 
    </joint> 
    <joint name="base_imu_joint" type="fixed"> 
-	<parent link="base" /> 
+	<parent link="base_link" /> 
 	<child link="imu" /> 
-	<origin xyz="0.0 0.0   0.0" rpy="3.1405788 0.0034281 3.1382064" /> 
+	<origin xyz="0.0 0.0 0.0" rpy="3.1405788 0.0034281 3.1382064" /> 
    </joint> 
    <link name="imu"> 
 	<visual> 
