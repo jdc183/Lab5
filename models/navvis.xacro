@@ -100,9 +100,9 @@
 		<origin xyz="0.2325416305773505 -0.0001380069427607134 1.920122926231907"
 rpy="-0.0012068 0.114646 -0.0015308" />
 	</VLP-16>
-	<xacro:laser name="top_right" parent="base" xyz="0.2978 -0.1450 1.8451" rpy="-1.176 0.6313 -1.9377" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
-	<xacro:laser name="top_left" parent="base" xyz="0.2997 0.1531 1.8443" rpy="1.178 0.6198 1.9560" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
-	<xacro:laser name="bottom" parent="base" xyz="0.3158 -0.0021 .51" rpy="3.1355 -1.3045 0.0025" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
+	<xacro:laser name="laser_vert_top_right" parent="base" xyz="0.2978 -0.1450 1.8451" rpy="-1.176 0.6313 -1.9377" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
+	<xacro:laser name="laser_vert_top_left" parent="base" xyz="0.2997 0.1531 1.8443" rpy="1.178 0.6198 1.9560" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
+	<xacro:laser name="laser_vert_bottom" parent="base" xyz="0.3158 -0.0021 .51" rpy="3.1355 -1.3045 0.0025" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
 
 	<xacro:wheel description="right" xyz="-0.1 -0.4 .2" radius=".2"/>
 	<xacro:wheel description="left" xyz="-0.1 0.4 .2" radius=".2"/>
